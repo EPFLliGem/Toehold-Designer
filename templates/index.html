@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+
+   tr, td {
+        padding: 10px;
+    }
+
+   th, td {
+       border: 1px solid black;
+       font-size: 13px;
+   }
+
+   .button {
+       border: none;
+   }
+
+</style>
+
+<div style="height:50px;"></div>
+<body>
+    <form id="form" action="/" method="POST">
+        Sequence: <input type="text" class = "wide" name="sequence" value="GGGCAGUGAUCUAGGCUACUGGAUUGAGAGUGAGAAGAAUGACACAUGGAGGCUGAAGAGGGCCCAUCUGAUCGAGAUGAAAACAUGUGAAUGGCCAAAGUCCCACACAUUGUGGACAGAUGGAAUAGAAGAGAGUGAUCUGAUCAUACCCAAGUCUUUAGCUGGGC"><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+<div style="height:50px;"></div>
+<table class="target_sequences">
+    {% if list|length > 0 %}
+    <tr class="button">
+        <td class="button"></td>
+        <td class="button"></td>
+        <td class="button">
+            <form action="/sort" method="POST">
+                <input type="submit" value="Sort">
+                <input type="hidden" name="list" value="{{ list }}">
+                <input type="hidden" name="sort_by" value="single">
+            </form>
+        </td>
+           <td class="button">
+             <form action="/sort" method="POST">
+                <input type="submit" value="Sort">
+                <input type="hidden" name="list" value="{{ list }}">
+                <input type="hidden" name="sort_by" value="toehold">
+            </form>
+        </td>
+      <td class="button">
+             <form action="/sort" method="POST">
+                <input type="submit" value="Sort">
+                <input type="hidden" name="list" value="{{ list }}">
+                <input type="hidden" name="sort_by" value="score">
+            </form>
+        </td>
+
+    </tr>
+     <tr>
+        <td>Target sequence</td>
+         <td>Toehold switch</td>
+         <td>Single defect</td>
+         <td>Toehold defect</td>
+         <td>Score</td>
+
+    </tr>
+    {% endif %}
+    {% for elements in list %}
+        <tr>
+            <td> {{ elements[0] }} </td>
+            <td> {{ elements[1] }} </td>
+            <td> {{elements[2]  }} </td>
+            <td> {{elements[3]  }}</td>
+            <td> {{elements[4]  }}</td>
+
+        </tr>
+    {% endfor %}
+ </table>
+</html>
