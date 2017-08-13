@@ -10,16 +10,13 @@ app = Flask(__name__)
 def index():
     sequence=request.form.get('sequence')
     list = []
-    points = ''
-    for i in range(len('UCCACAAUGUGUGGGACUUUGGCCAUUCACAUGUUUGGACUUUAGAACAGAGGAGAUAAAGAUGAAACAUGUGAAUAACCUGGCGGCAGCGCAAAAG')):
-        points +='.'
-    print(points)
-    if(sequence != None):
-        secondary_toehold = '.........................(((((((((((...(((((............)))))...)))))))))))......................'
-        secondary_single = '....................................'
+    if sequence != None:
+        secondary_sensor = '.........................(((((((((((...(((((............)))))...)))))))))))......................'
+        secondary_toehold = '.................................................................................................'
+        secondary_target = '....................................'
         window = 36
         result_path = '/home/natalija/Documents/iGEM/nupack/test_data/'
-        list = nupack_analysis(sequence, secondary_toehold, secondary_single, window, result_path)
+        list = nupack_analysis(sequence, secondary_toehold, secondary_target, secondary_sensor,  window, result_path)
 
     return render_template('index.html', list=list)
 
@@ -28,12 +25,14 @@ def sort():
     list = ast.literal_eval(request.form.get('list'))
     sort_by = request.form.get('sort_by')
 
-    if(sort_by == 'toehold'):
-        list = sorted(list, key=lambda x: x[3])
-    elif(sort_by == 'single'):
+    if(sort_by == 'target'):
         list = sorted(list, key=lambda x: x[2])
-    elif (sort_by == 'score'):
+    elif(sort_by == 'toehold'):
+        list = sorted(list, key=lambda x: x[3])
+    elif (sort_by == 'sensor'):
         list = sorted(list, key=lambda x: x[4])
+    elif (sort_by == 'score'):
+        list = sorted(list, key=lambda x: x[5])
 
     return render_template('index.html', list=list)
 
@@ -80,92 +79,43 @@ def possible_toehold(sequence, window):
     final = {}
 
     for rev, reg in zip(rev_comp_sequences, reg_sequences):
-        if no_stop(reg[0:12] + linker):
-            final[reg] = rev + loop + reg[0:12] + linker
+        for n in ['A', 'U', 'C', 'G']:
+            if no_stop(reg[0:11] + n + linker):
+                final[reg+n] = rev + loop + reg[0:11] + n + linker
 
     return final
 
-def complex_defect_score(sequence, secondary_toehold, window, result_path):
-    result = {}
-    sequences_list = possible_toehold(sequence, window)
-    for key, value in sequences_list.items():
-        file = open('{}prefix_toeh.in'.format(result_path), 'w')
-        file.write("{}\n".format(value))
-        file.write("{}".format(secondary_toehold))
-        file.close()
+def complex_defect(sequence, secondary, result_path):
+    file = open('{}toeh.in'.format(result_path), 'w')
+    file.write("{}\n".format(sequence))
+    file.write("{}".format(secondary))
+    file.close()
 
-        defect_toeh = 0
-        count = 0
-        with Popen(["complexdefect", "{}prefix_toeh".format(result_path)], stdout=PIPE) as proc:
-            res = (proc.stdout.read()).decode("utf-8").split('\n')
-            for l in res:
-                count += 1
-                if (count == 16):
-                    defect_toeh = float(l)
-            os.remove("{}prefix_toeh.in".format(result_path))
-        result[key] = defect_toeh
+    defect_toeh = 0
+    count = 0
+    with Popen(["complexdefect", "{}toeh".format(result_path)], stdout=PIPE) as proc:
+        res = (proc.stdout.read()).decode("utf-8").split('\n')
+        for l in res:
+            count += 1
+            if count == 16:
+                defect_toeh = float(l)
+    os.remove("{}toeh.in".format(result_path))
+    return defect_toeh
 
-    return result
-
-def complex_defect_score_single(sequence, secondary_single, window, result_path):
-    result = {}
-    sequences_list = possible_toehold(sequence, window)
-    for key, value in sequences_list.items():
-        file = open('{}prefix_sing.in'.format(result_path), 'w')
-        file.write("{}\n".format(key[0:36]))
-        file.write("{}".format(secondary_single))
-        file.close()
-
-        defect_sing = 0
-        count = 0
-        with Popen(["complexdefect", "{}prefix_sing".format(result_path)], stdout=PIPE) as proc:
-            res = (proc.stdout.read()).decode("utf-8").split('\n')
-            for l in res:
-                count += 1
-                if (count == 16):
-                    defect_sing = float(l)
-            os.remove("{}prefix_sing.in".format(result_path))
-
-        result[key] = (value, str(defect_sing))
-
-    return result
-
-
-def complex_defect_score_toehold(sequence, secondary_single, window, result_path):
-    result = {}
-    sequences_list = possible_toehold(sequence, window)
-    for key, value in sequences_list.items():
-        file = open('{}prefix_toeh_sc.in'.format(result_path), 'w')
-        file.write("{}\n".format(value))
-        file.write("{}".format(secondary_single))
-        file.close()
-
-        defect_sing = 0
-        count = 0
-        with Popen(["complexdefect", "{}prefix_toeh_sc".format(result_path)], stdout=PIPE) as proc:
-            res = (proc.stdout.read()).decode("utf-8").split('\n')
-            for l in res:
-                count += 1
-                if (count == 16):
-                    defect_sing = float(l)
-        #    os.remove("{}prefix_toeh_sc.in".format(result_path))
-
-        result[key] = str(defect_sing)
-
-    return result
-
-def nupack_analysis(sequence, secondary_toehold, secondary_single, window, result_path):
-    toehold_defect = complex_defect_score(sequence, secondary_toehold, window, result_path)
-    single_trigger_defect = complex_defect_score_single(sequence, secondary_single, window, result_path)
-    secondary_single = '.................................................................................................'
-    single_toehold_defect = complex_defect_score_toehold(sequence, secondary_single, window, result_path)
-
+def nupack_analysis(sequence, secondary_toehold, secondary_target, secondary_sensor,  window, result_path):
     list_for_table = []
+    target_tohold_map = possible_toehold(sequence, window)
+    count = 0
 
-    for key, val in toehold_defect.items():
-        score = 5 * float(single_trigger_defect[key][1]) + 4*float(single_toehold_defect[key]) + 3*float(val)
-        list_for_table.append(tuple((key, single_trigger_defect[key][0], single_trigger_defect[key][1], val, score)))
-    print(list_for_table)
+    for target, toehold in target_tohold_map.items():
+        target_defect = complex_defect(target[0:36], secondary_target, result_path)
+        toehold_defect = complex_defect(toehold, secondary_toehold, result_path)
+        sensor_defect =  complex_defect(toehold, secondary_sensor, result_path)
+
+        score = 5*target_defect + 4*toehold_defect+ 3*sensor_defect
+        list_for_table.append(tuple([target[0:36], toehold, target_defect, toehold_defect, sensor_defect, score]))
+        count += 1
+        print('{} out of {}'.format(count, len(target_tohold_map)))
     return list_for_table
 
 if __name__ == '__main__':

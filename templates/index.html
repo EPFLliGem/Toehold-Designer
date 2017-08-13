@@ -36,7 +36,7 @@
             <form action="/sort" method="POST">
                 <input type="submit" value="Sort">
                 <input type="hidden" name="list" value="{{ list }}">
-                <input type="hidden" name="sort_by" value="single">
+                <input type="hidden" name="sort_by" value="target">
             </form>
         </td>
            <td class="button">
@@ -44,6 +44,13 @@
                 <input type="submit" value="Sort">
                 <input type="hidden" name="list" value="{{ list }}">
                 <input type="hidden" name="sort_by" value="toehold">
+            </form>
+        </td>
+      <td class="button">
+             <form action="/sort" method="POST">
+                <input type="submit" value="Sort">
+                <input type="hidden" name="list" value="{{ list }}">
+                <input type="hidden" name="sort_by" value="sensor">
             </form>
         </td>
       <td class="button">
@@ -58,8 +65,9 @@
      <tr>
         <td>Target sequence</td>
          <td>Toehold switch</td>
-         <td>Single defect</td>
+         <td>Target defect</td>
          <td>Toehold defect</td>
+         <td>Sensor defect</td>
          <td>Score</td>
 
     </tr>
@@ -71,6 +79,7 @@
             <td> {{elements[2]  }} </td>
             <td> {{elements[3]  }}</td>
             <td> {{elements[4]  }}</td>
+            <td> {{elements[5]  }}</td>
 
         </tr>
     {% endfor %}
