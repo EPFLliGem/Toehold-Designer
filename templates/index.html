@@ -21,7 +21,7 @@
 <div style="height:50px;"></div>
 <body>
     <form id="form" action="/" method="POST">
-        Sequence: <input type="text" class = "wide" name="sequence" value="GGGCAGUGAUCUAGGCUACUGGAUUGAGAGUGAGAAGAAUGACACAUGGAGGCUGAAGAGGGCCCAUCUGAUCGAGAUGAAAACAUGUGAAUGGCCAAAGUCCCACACAUUGUGGACAGAUGGAAUAGAAGAGAGUGAUCUGAUCAUACCCAAGUCUUUAGCUGGGC"><br>
+        Sequence: <input type="text" width="100%" name="sequence" value="GGGCAGUGAUCUAGGCUACUGGAUUGAGAGUGAGAAGAAUGACACAUGGAGGCUGAAGAGGGCCCAUCUGAUCGAGAUGAAAACAUGUGAAUGGCCAAAGUCCCACACAUUGUGGACAGAUGGAAUAGAAGAGAGUGAUCUGAUCAUACCCAAGUCUUUAGCUGGGC"><br>
         <input type="submit" value="Submit">
     </form>
 </body>
@@ -64,22 +64,22 @@
     </tr>
      <tr>
         <td>Target sequence</td>
-         <td>Toehold switch</td>
-         <td>Target defect</td>
-         <td>Toehold defect</td>
-         <td>Sensor defect</td>
-         <td>Score</td>
+         <td>Toehold switch Sensor</td>
+         <td>a = local single-str.</td>
+         <td>b = toehold single-str.</td>
+         <td>c = Sensor defect</td>
+         <td>Score=5*a + 4*b + 3*c</td>
 
     </tr>
     {% endif %}
     {% for elements in list %}
         <tr>
-            <td> {{ elements[0] }} </td>
-            <td> {{ elements[1] }} </td>
-            <td> {{elements[2]  }} </td>
-            <td> {{elements[3]  }}</td>
-            <td> {{elements[4]  }}</td>
-            <td> {{elements[5]  }}</td>
+            <td> {{elements[0]}} </td>
+            <td> {{elements[1]}} </td>
+            <td> {{elements[2]}} </td>
+            <td> {{elements[3]}}</td>
+            <td> {{elements[4]}}</td>
+            <td> {{elements[5]}}</td>
 
         </tr>
     {% endfor %}

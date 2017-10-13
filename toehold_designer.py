@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import os
 from subprocess import Popen, PIPE
-from collections import OrderedDict
+import os.path
 import ast
 import time
 
@@ -14,11 +14,9 @@ def index():
     if sequence != None:
         secondary_sensor_B = '.........................(((((((((((...(((((............)))))...)))))))))))......................'
         secondary_sensor_A = '..............................(((((((((...((((((...........))))))...)))))))))..............................'
-        secondary_toehold = '.................................................................................................'
-        secondary_target = '....................................'
         window = 36
         result_path = '/home/natalija/Documents/iGEM/nupack/data/'
-        list = nupack_analysis(sequence, secondary_toehold, secondary_target, secondary_sensor_B, window, 'B', result_path)
+        list = nupack_analysis(sequence, secondary_sensor_A, window, 'A', result_path)
 
     return render_template('index.html', list=list)
 
@@ -115,22 +113,26 @@ def complex_defect(sequence, secondary, result_path):
             count += 1
             if count == 16:
                 defect_toeh = float(l)
+
     os.remove("{}toeh.in".format(result_path))
     return defect_toeh
 
 
-def single_streadness(sequence, result_path):
-    file = open('{}pipo{}.in'.format(result_path, sequence), 'w')
+def single_streadness(sequence, result_path, wait=1):
+    file = open('{}pipo.in'.format(result_path), 'w')
     file.write("{}\n".format(sequence))
     file.close()
 
-    Popen(["pairs", "{}pipo{}".format(result_path, sequence)], stdout=PIPE)
-    time.sleep(1)
-    with open("{}pipo{}.ppairs".format(result_path, sequence)) as res:
+    Popen(["pairs", "{}pipo".format(result_path)], stdout=PIPE)
+    time.sleep(wait)
+    with open("{}pipo.ppairs".format(result_path)) as res:
         parsed_res = parse_pairs_result(res, len(sequence))
 
+    os.remove("{}pipo.ppairs".format(result_path,))
+    os.remove("{}pipo.in".format(result_path))
 
-    return sum(parsed_res) / len(sequence)
+
+    return parsed_res
 
 
 def parse_pairs_result(res, length):
@@ -145,7 +147,7 @@ def parse_pairs_result(res, length):
 
     return final
 
-def nupack_analysis(sequence, secondary_toehold, secondary_target, secondary_sensor,  window, sensor_type, result_path):
+def nupack_analysis(sequence, secondary_sensor,  window, sensor_type, result_path):
     list_for_table = []
     if sensor_type == 'A':
         target_toehold_map = possible_toehold_A(sequence, window)
@@ -153,15 +155,21 @@ def nupack_analysis(sequence, secondary_toehold, secondary_target, secondary_sen
         target_toehold_map = possible_toehold_B(sequence, window)
 
     count = 0
+    ids = []
+    sequence = sequence.upper().replace('T', 'U')
+    single_streadness_sequence = single_streadness(sequence, result_path, wait=6)
+    print(single_streadness_sequence)
     for target, toehold in target_toehold_map.items():
-        target_defect = single_streadness(target[0:36], result_path)
-        toehold_defect = single_streadness(toehold, result_path)
+        id = sequence.index(target)
+
+        target_defect = sum(single_streadness_sequence[id:id+36])/36
+        toehold_defect = sum(single_streadness(toehold, result_path)[0:30])/30
         sensor_defect = complex_defect(toehold, secondary_sensor, result_path)
 
-        score = 5*target_defect + 4*toehold_defect + 3*sensor_defect
-        list_for_table.append(tuple([target[0:36], toehold, target_defect, toehold_defect, sensor_defect, score]))
-        count += 1
-        print('{} out of {}'.format(count, len(target_toehold_map)))
+        score = 5*(1-target_defect) + 4*(1-toehold_defect) + 3*sensor_defect
+
+        list_for_table.append(tuple([target[0:36], toehold, 1-target_defect, 1-toehold_defect, sensor_defect, score]))
+
     return list_for_table
 
 if __name__ == '__main__':
