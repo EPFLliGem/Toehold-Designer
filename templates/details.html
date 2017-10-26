@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+        a {
+            cursor: pointer;
+            color: indigo;
+        }
+
+        #back {
+            width:500px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<a onclick="document.getElementById('home').submit();"><span id="back" class="glyphicon glyphicon-home"></span></a>
+
+<h2>Target <b># {{ details[7]|int + 1 }}</b></h2>
+
+{% if details %}
+    <table class="table table-striped">
+        <tr>
+            <td><b>Target </b></td>
+            <td>{{ details[0] }}</td>
+        </tr>
+        <tr>
+            <td><b>Toehold Series A </b> </td>
+            <td>{{ details[1] }}</td>
+        </tr>
+        <tr>
+            <td><b>Target single streadiness </b></td>
+            <td>{{ details[2] }}</td>
+        </tr>
+        <tr>
+            <td><b>Toehold single streadiness </b> </td>
+            <td>{{ details[3] }}</td>
+        </tr>
+        <tr>
+            <td><b>Toehold complex defect </b></td>
+            <td>{{ details[4] }}</td>
+        </tr>
+        <tr>
+            <td><b>Score </b></td>
+            <td>{{ details[5] }}</td>
+        </tr>
+
+    </table>
+{% endif %}
+
+<form id="previous" action="/details" method="POST">
+                     <input type="hidden" name="list" value="{{details[6]}}">
+                     <input type="hidden" name="index" value="{{details[7]|int - 1}}">
+</form>
+<form action="/details" id=next method="POST">
+                     <input type="hidden" name="list" value="{{details[6]}}">
+                     <input type="hidden" name="index" value="{{details[7]|int + 1}}">
+</form>
+
+<form action="/home" id=home method="POST">
+                     <input type="hidden" name="list" value="{{details[6]}}">
+</form>
+
+<ul class="pager">
+  <li class="previous"> <a onclick="document.getElementById('previous').submit();">Previous</a></li>
+  <li class="next"><a onclick="document.getElementById('next').submit();">Next</a></li>
+</ul>
+
+</body>

@@ -1,6 +1,7 @@
 import os
-from subprocess import Popen, PIPE
 import os.path
+from subprocess import Popen, PIPE
+
 import time
 
 

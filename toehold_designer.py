@@ -16,21 +16,27 @@ def index():
 
     return render_template('index.html', list=list)
 
-@app.route('/sort', methods=['POST'])
-def sort():
+
+@app.route('/home', methods=['POST'])
+def home():
     list = ast.literal_eval(request.form.get('list'))
-    sort_by = request.form.get('sort_by')
-
-    if(sort_by == 'target'):
-        list = sorted(list, key=lambda x: x[2])
-    elif(sort_by == 'toehold'):
-        list = sorted(list, key=lambda x: x[3])
-    elif (sort_by == 'sensor'):
-        list = sorted(list, key=lambda x: x[4])
-    elif (sort_by == 'score'):
-        list = sorted(list, key=lambda x: x[5])
-
     return render_template('index.html', list=list)
+
+
+@app.route('/details', methods=['POST'])
+def details():
+    list = ast.literal_eval(request.form.get('list'))
+    index = int(request.form.get('index')) % len(list)
+    element = list[index]
+
+    target = element[0]
+    toehold = element[1]
+    target_ss = element[2]
+    toehold_ss = element[3]
+    defect = element[4]
+    score = element[5]
+
+    return render_template('details.html', details=(target, toehold, target_ss,toehold_ss, defect, score, list, index))
 
 
 if __name__ == '__main__':
