@@ -36,8 +36,9 @@ def details():
     defect = element[4]
     score = element[5]
 
-    return render_template('details.html', details=(target, toehold, target_ss,toehold_ss, defect, score, list, index))
+    toeholdsB = possible_toehold_B(target, reversed_complement(target))
 
+    return render_template('details.html', details=(target, toehold, target_ss,toehold_ss, defect, score, list, index, toeholdsB))
 
 if __name__ == '__main__':
     app.run()

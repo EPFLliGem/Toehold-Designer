@@ -36,6 +36,11 @@
 
 <h2>Target <b># {{ details[7]|int + 1 }}</b></h2>
 
+<ul class="pager">
+  <li class="previous"> <a onclick="document.getElementById('previous').submit();">Previous</a></li>
+  <li class="next"><a onclick="document.getElementById('next').submit();">Next</a></li>
+</ul>
+
 {% if details %}
     <table class="table table-striped">
         <tr>
@@ -62,6 +67,13 @@
             <td><b>Score </b></td>
             <td>{{ details[5] }}</td>
         </tr>
+        {% for t in details[8] %}
+        <tr>
+            <td><b> Toehold Series B </b></td>
+            <td><b style="color: darkorchid">{{t[0:36]}}</b>{{ t[36:75] }}<b style="color: red">{{ t[75]}}</b>{{t[76:97]}}</td>
+        </tr>
+        {% endfor %}
+
 
     </table>
 {% endif %}
@@ -78,10 +90,5 @@
 <form action="/home" id=home method="POST">
                      <input type="hidden" name="list" value="{{details[6]}}">
 </form>
-
-<ul class="pager">
-  <li class="previous"> <a onclick="document.getElementById('previous').submit();">Previous</a></li>
-  <li class="next"><a onclick="document.getElementById('next').submit();">Next</a></li>
-</ul>
 
 </body>
