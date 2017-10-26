@@ -2,34 +2,73 @@
 <html lang="en">
 
 <style>
-
-   tr, td {
-        padding: 10px;
+    
+    html {
+        padding: 3% 10%;
     }
 
    th, td {
-       border: 1px solid black;
-       font-size: 13px;
+       border: 2px solid #02303A;
+       font-size: 110%;
+       padding: 30px;
+       margin: 0px;
    }
 
    .button {
        border: none;
    }
 
+   #seq{
+       width:100%;
+       margin-bottom: 50px;
+       margin-top: 5px;
+   }
+
+    p {
+        font-size: 150%;
+        color: #02303A;
+    }
+
+    #sub, head {
+        background-color: #02303A;
+        color: white;
+        font-size: 110%;
+        width: 10%;
+    }
+
+
+    #sub:hover {
+        background-color: #356368;
+        cursor: pointer;
+    }
+
+    #menu {
+        width:100%;
+        margin: 0px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 200%;
+        height: 50px;
+        background-color: #02303A;
+    }
+
 </style>
 
-<div style="height:50px;"></div>
 <body>
+
+    <div id="menu"></div>
+    <p>Sequence</p>
     <form id="form" action="/" method="POST">
-        Sequence: <input type="text" width="100%" name="sequence" value="GGGCAGUGAUCUAGGCUACUGGAUUGAGAGUGAGAAGAAUGACACAUGGAGGCUGAAGAGGGCCCAUCUGAUCGAGAUGAAAACAUGUGAAUGGCCAAAGUCCCACACAUUGUGGACAGAUGGAAUAGAAGAGAGUGAUCUGAUCAUACCCAAGUCUUUAGCUGGGC"><br>
-        <input type="submit" value="Submit">
+        <input type="text" id="seq" name="sequence" value="GGGCAGUGAUCUAGGCUACUGGAUUGAGAGUGAGAAGAAUGACACAUGGAGGCUGAAGAGGGCCCAUCUGAUCGAGAUGAAAACAUGUGAAUGGCCAAAGUCCCACACAUUGUGGACAGAUGGAAUAGAAGAGAGUGAUCUGAUCAUACCCAAGUCUUUAGCUGGGC"><br>
+        <input id="sub" type="submit" value="Submit">
     </form>
 </body>
 
 <div style="height:50px;"></div>
 <table class="target_sequences">
     {% if list|length > 0 %}
-    <tr class="button">
+  <!--  <tr class="button">
         <td class="button"></td>
         <td class="button"></td>
         <td class="button">
@@ -62,23 +101,15 @@
         </td>
 
     </tr>
-     <tr>
-        <td>Target sequence</td>
-         <td>Toehold switch Sensor</td>
-         <td>a = local single-str.</td>
-         <td>b = toehold single-str.</td>
-         <td>c = Sensor defect</td>
-         <td>Score=5*a + 4*b + 3*c</td>
+     <tr> -->
+        <td id="head">Target sequence</td>
+         <td id="head">Score=5*a + 4*b + 3*c</td>
 
     </tr>
     {% endif %}
     {% for elements in list %}
         <tr>
             <td> {{elements[0]}} </td>
-            <td> {{elements[1]}} </td>
-            <td> {{elements[2]}} </td>
-            <td> {{elements[3]}}</td>
-            <td> {{elements[4]}}</td>
             <td> {{elements[5]}}</td>
 
         </tr>
