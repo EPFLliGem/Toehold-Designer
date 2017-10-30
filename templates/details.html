@@ -46,10 +46,22 @@
         <tr>
             <td><b>Target </b></td>
             <td>{{ details[0] }}</td>
+             <td> <form action="/structure" method="POST">
+                     <input type="hidden" name="sequence" value="{{details[0]}}">
+                     <input type="hidden" name="details" value="{{details}}">
+                     <input type="submit" class="btn btn-info" value="Secondary structure">
+                 </form>
+            </td>
         </tr>
         <tr>
             <td><b>Toehold Series A </b> </td>
             <td>{{ details[1] }}</td>
+             <td> <form action="/structure" method="POST">
+                     <input type="hidden" name="sequence" value="{{details[1]}}">
+                     <input type="hidden" name="details" value="{{details}}">
+                     <input type="submit" class="btn btn-info" value="Secondary structure">
+                 </form>
+            </td>
         </tr>
         <tr>
             <td><b>Target single streadiness </b></td>
@@ -71,11 +83,25 @@
         <tr>
             <td><b> Toehold Series B </b></td>
             <td><b style="color: darkorchid">{{t[0:36]}}</b>{{ t[36:75] }}<b style="color: red">{{ t[75]}}</b>{{t[76:97]}}</td>
+            <td> <form action="/structure" method="POST">
+                     <input type="hidden" name="sequence" value="{{t}}">
+                     <input type="hidden" name="details" value="{{details}}">
+                     <input type="submit" class="btn btn-info" value="Secondary structure">
+                 </form>
+            </td>
         </tr>
         {% endfor %}
 
 
     </table>
+{% endif %}
+
+{% if img %}
+
+    <div class="center-block">
+        <h4 class="center-block" style="padding-top: 20px; padding-bottom: 20px; "> Optimal secondary structure for <b> {{ title }}</b></h4>
+        <img class="center-block" src={{img}}/>
+    </div>
 {% endif %}
 
 <form id="previous" action="/details" method="POST">

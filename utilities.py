@@ -40,13 +40,13 @@ def no_stop(sequence):
 def possible_toehold_B(reg, rev):
     loop = 'GGACUUUAGAACAGAGGAGAUAAAGAUG'
     linker = 'AACCUGGCGGCAGCGCAAAAG'
-    toeholds = {}
+    toeholds = []
 
     for n in ['A', 'G', 'U', 'C']:
         if no_stop(reg[0:11] + n + linker):
-            toeholds[reg+n] = rev + loop + reg[0:11] + n + linker
+            toeholds.append(rev + loop + reg[0:11] + n + linker)
 
-    return toeholds.values()
+    return toeholds
 
 def possible_toehold_A(reg_sequences, rev_comp_sequences):
     loop = 'GUUAUAGUUAUGAACAGAGGAGACAUAACAUGAAC'

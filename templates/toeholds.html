@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+
+    html, body {
+        padding: 3% 10%;
+    }
+
+   #seq{
+       width:100%;
+       margin-bottom: 50px;
+       margin-top: 5px;
+   }
+
+    p {
+        font-size: 150%;
+        color: #02303A;
+    }
+
+    .btn-info {
+        background-color: #02303A;
+    }
+
+</style>
+
+<body>
+
+    <p>Enter the virus sequence here</p>
+    <form id="form" action="/" method="POST">
+        <input type="text" id="seq" name="sequence" value=""><br>
+        <input  class="btn btn-info" type="submit" value="Submit">
+    </form>
+</body>
+
+<div style="height:50px;"></div>
+<table class="table table-striped">
+    {% if list|length > 0 %}
+        <thead>
+            <td><b>Target sequence</b></td>
+            <td><b>Score</b></td>
+
+        </thead>
+    {% endif %}
+    <tbody>
+    {% set cnt = 0 %}
+    {% for elements in list %}
+        <tr>
+            <td> {{elements[0]}} </td>
+            <td> {{elements[5]}}</td>
+            <td> <form action="/details" method="POST">
+                     <input type="hidden" name="list" value="{{list}}">
+                     <input type="hidden" name="index" value="{{loop.index0}}">
+                     <input type="submit" class="btn btn-info" value="See more">
+                 </form>
+            </td>
+        </tr>
+        {% set cnt = cnt + 1 %}
+    {% endfor %}
+    </tbody>
+ </table>
+</html>
