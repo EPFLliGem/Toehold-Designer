@@ -15,6 +15,25 @@ We can then choose the first few Series A or B toeholds and test them in the lab
 <b>Toehold designer</b> was tested on succesfully generating a toehold switch for a hepatitis C sequence. The results can be seen [here](http://2017.igem.org/Team:EPFL/Results/Toehold#software). 
 
 
+# Instalation in only 5 steps
+
+1. Install NUPACK from [here](http://nupack.org/downloads)
+2. Install Python from [here](https://www.python.org/downloads/release/python-360/)
+3. Open the command line and run the following commands: 
+```
+python get-pip.py
+pip install beautifulsoup4 Flask
+```
+4. Download and unzip this project
+5. Place you in the root of this repository and write in the command line
+```
+python toehold-designer.py
+```
+That's it. You have the toehold designer running in your browser now! 
+
+# How to use it? 
+
+Demo here 
 
 # References 
 
