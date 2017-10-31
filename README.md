@@ -8,9 +8,12 @@ Thanks to the NUPACK Design <sup>[3](#3)</sup> and Analysis<sup>[4](#4)</sup> al
 
 By summing up (1), (2) and (3), and assigning to each of them a different weight <sup>[1](#1)</sup> we can order the generated sequences by score from lowest up to the highest score where the sequences with lowest score have better structures than the ones with highest scores. 
 
+It also makes use of the NUPACK Web application<sup>[3](#3)</sup> in order to generate images of the optimal secondary structure of the generated sequence. 
+
 We can then choose the first few Series A or B toeholds and test them in the lab. 
 
-<b>Toehold designer</b> was tested on generating a toehold switch for a hepatitis C sequence. The results can be seen [here](http://2017.igem.org/Team:EPFL/Results/Toehold#software)
+<b>Toehold designer</b> was tested on succesfully generating a toehold switch for a hepatitis C sequence. The results can be seen [here](http://2017.igem.org/Team:EPFL/Results/Toehold#software). 
+
 
 
 # References 
