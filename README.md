@@ -1,7 +1,5 @@
 <img src="http://2017.igem.org/wiki/images/a/ac/T--EPFL--ToeholdDesigner_V2.svg"/>
 
-# Toehold designer 
-
 This tool allows people to easily generate toehold switches and targets for a unique virus sequence. It represents a pipeline that puts together techniques for generating this types of switches<sup>[1](#1), [2](#2)</sup> and processing algorithms<sup>[3](#3), [4](#4), [5](#5)</sup>. 
 
 It strictly follows the Series A and B designs of the Zika virus<sup>[2](#2)</sup>, generalized for any unique RNA virus sequence. 
