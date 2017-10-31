@@ -1,4 +1,4 @@
-<img src="http://2017.igem.org/wiki/images/a/ac/T--EPFL--ToeholdDesigner_V2.svg"  style="width:60%"/>
+<img src="http://2017.igem.org/wiki/images/a/ac/T--EPFL--ToeholdDesigner_V2.svg"/>
 
 # Toehold designer 
 
