@@ -32,7 +32,7 @@ python toehold-designer.py
 That's it. You have the toehold designer running in your browser now! 
 
 # How to use it? 
-[](http://2017.igem.org/wiki/images/0/0d/T--EPFL--software-demo.gif)
+Take a look of [this demo](http://2017.igem.org/wiki/images/0/0d/T--EPFL--software-demo.gif)
 
 # References 
 
