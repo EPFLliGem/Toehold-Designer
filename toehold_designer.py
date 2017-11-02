@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 import ast
-from utilities import *
 from bs4 import BeautifulSoup
 import requests as rq
+
+from utilities import *
 
 app = Flask(__name__)
 
@@ -17,7 +18,8 @@ def toeholds():
     sequence=request.form.get('sequence')
     list = []
     if sequence != None:
-        secondary_sensor_B = '.........................(((((((((((...(((((............)))))...)))))))))))......................'
+        #secondary_sensor_B = '.........................(((((((((((...(((((............)))))...)))))))))))......................'
+
         secondary_sensor_A = '..............................(((((((((...((((((...........))))))...)))))))))..............................'
         window = 36
         result_path = '/home/natalija/Documents/iGEM/nupack/data/'

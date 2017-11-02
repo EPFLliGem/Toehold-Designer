@@ -48,6 +48,7 @@ def possible_toehold_B(reg, rev):
 
     return toeholds
 
+
 def possible_toehold_A(reg_sequences, rev_comp_sequences):
     loop = 'GUUAUAGUUAUGAACAGAGGAGACAUAACAUGAAC'
     linker = 'GUUAACCUGGCGGCAGCGCAAAAG'
@@ -58,6 +59,7 @@ def possible_toehold_A(reg_sequences, rev_comp_sequences):
             toeholds[reg] = rev + loop + reg[0:6] + 'AAC' + reversed_complement(reg[0:3]) + linker
 
     return toeholds
+
 
 def complex_defect(sequence, secondary, result_path):
     file = open('{}toeh.in'.format(result_path), 'w')
