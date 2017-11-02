@@ -22,7 +22,7 @@ def toeholds():
 
         secondary_sensor_A = '..............................(((((((((...((((((...........))))))...)))))))))..............................'
         window = 36
-        result_path = '/home/natalija/Documents/iGEM/nupack/data/'
+        result_path = ''
         list = sorted(nupack_analysis(sequence, secondary_sensor_A, window, 'A', result_path), key=lambda x: x[5])
 
     return render_template('toeholds.html', list=list)
